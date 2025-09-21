@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Bài 2.2 - Trắc nghiệm</title>
+  <link rel="stylesheet" href="bai2.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <h1>TEST 1 TEST 2</h1>
+
+  <div class="question">
+    <h3>Question for TEST 1</h3>
+    <p>Please select your favorite Web language:</p>
+    <form id="quizForm">
+      <label><input type="radio" name="language" value="HTML"> HTML</label><br>
+      <label><input type="radio" name="language" value="CSS"> CSS</label><br>
+      <label><input type="radio" name="language" value="JavaScript"> JavaScript</label><br><br>
+
+      <p>Please select your age:</p>
+      <label><input type="radio" name="age" value="0 - 30"> 0 - 30</label><br>
+      <label><input type="radio" name="age" value="31 - 60"> 31 - 60</label><br>
+      <label><input type="radio" name="age" value="61 - 100"> 61 - 100</label><br><br>
+
+      <button type="button" onclick="submitQuiz()">Submit</button>
+    </form>
+  </div>
+
+  <div id="result"></div>
+
+  <div class="footer">Thông tin bản quyền</div>
+
+  <script>
+    function submitQuiz() {
+      const form = document.getElementById("quizForm");
+      const language = form.language.value;
+      const age = form.age.value;
+
+      if (!language || !age) {
+        alert("Vui lòng chọn đủ cả ngôn ngữ và độ tuổi!");
+        return;
+      }
+
+      document.getElementById("result").innerHTML =
+        "<p><b>Bạn chọn:</b> " + language + ", độ tuổi: " + age + "</p>";
+    }
+  </script>
+</body>
+</html>

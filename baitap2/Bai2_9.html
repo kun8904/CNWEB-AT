@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Bài 7.9 - Cây thư mục</title>
+  <link rel="stylesheet" href="bai2.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    ul.tree, ul.tree ul {
+      list-style-type: none;
+      padding-left: 20px;
+    }
+    ul.tree {
+      margin: 0;
+      padding: 0;
+    }
+    .toggle {
+      cursor: pointer;
+      margin-right: 5px;
+      color: blue;
+      font-weight: bold;
+    }
+    .hidden {
+      display: none;
+    }
+    .selected {
+      background-color: yellow;
+    }
+    li span.node {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Cây thư mục</h2>
+  <ul class="tree">
+    <li>
+      <span class="toggle">[+]</span><span class="node">Root</span>
+      <ul class="hidden">
+        <li><span class="node">Folder 1</span></li>
+        <li>
+          <span class="toggle">[+]</span><span class="node">Folder 2</span>
+          <ul class="hidden">
+            <li><span class="node">Folder 2-1</span></li>
+            <li>
+              <span class="toggle">[+]</span><span class="node">Folder 2-2</span>
+              <ul class="hidden">
+                <li><span class="node">Folder 2-2-1</span></li>
+                <li><span class="node">Folder 2-2-2</span></li>
+              </ul>
+            </li>
+            <li><span class="node">Folder 2-3</span></li>
+          </ul>
+        </li>
+        <li><span class="node">Folder 3</span></li>
+        <li><span class="node">Folder 4</span></li>
+        <li><span class="node">Folder 5</span></li>
+      </ul>
+    </li>
+  </ul>
+
+  <script>
+    // xử lý mở/đóng nhánh
+    document.querySelectorAll('.toggle').forEach(toggle => {
+      toggle.addEventListener('click', function () {
+        const sublist = this.nextElementSibling.nextElementSibling;
+        if (sublist.classList.contains('hidden')) {
+          sublist.classList.remove('hidden');
+          this.textContent = '[-]';
+        } else {
+          sublist.classList.add('hidden');
+          this.textContent = '[+]';
+        }
+      });
+    });
+
+    // xử lý chọn node
+    document.querySelectorAll('.node').forEach(node => {
+      node.addEventListener('click', function () {
+        // bỏ chọn node khác
+        document.querySelectorAll('.node').forEach(n => n.classList.remove('selected'));
+        // chọn node hiện tại
+        this.classList.add('selected');
+      });
+    });
+  </script>
+</body>
+</html>

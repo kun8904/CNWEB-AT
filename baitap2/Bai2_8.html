@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Bài 2.8 - Tab</title>
+  <link rel="stylesheet" href="bai2.css">
+  <style>
+    .tab-container {
+      display: flex;
+      border-bottom: 2px solid #ccc;
+      margin-bottom: 10px;
+    }
+    .tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: #f2f2f2;
+      border: 1px solid #ccc;
+      border-bottom: none;
+      margin-right: 2px;
+      transition: background-color 0.3s;
+    }
+    /* Hover: sáng lên nếu chưa được chọn */
+    .tab:hover:not(.active) {
+      background-color: #e0e0e0;
+    }
+    /* Tab được chọn */
+    .tab.active {
+      background-color: #00bcd4;
+      color: white;
+      font-weight: bold;
+    }
+    .tab-content {
+      padding: 20px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h2>Ví dụ Tab</h2>
+  <div class="tab-container">
+    <div class="tab" data-tab="tab1">Tab 1</div>
+    <div class="tab" data-tab="tab2">Tab 2</div>
+    <div class="tab" data-tab="tab3">Tab 3</div>
+    <div class="tab" data-tab="tab4">Tab 4</div>
+  </div>
+
+  <div class="tab-content" id="tab1">Nội dung của Tab 1</div>
+  <div class="tab-content" id="tab2" style="display:none;">Nội dung của Tab 2</div>
+  <div class="tab-content" id="tab3" style="display:none;">Nội dung của Tab 3</div>
+  <div class="tab-content" id="tab4" style="display:none;">Nội dung của Tab 4</div>
+
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Xóa trạng thái active
+        tabs.forEach(t => t.classList.remove('active'));
+        contents.forEach(c => c.style.display = 'none');
+
+        // Đánh dấu tab được chọn
+        tab.classList.add('active');
+
+        // Hiển thị nội dung tương ứng
+        const target = tab.getAttribute('data-tab');
+        document.getElementById(target).style.display = 'block';
+      });
+    });
+
+    // Mặc định chọn tab đầu tiên
+    tabs[0].click();
+  </script>
+</body>
+</html>

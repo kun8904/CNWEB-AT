@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Form LOP</title>
+  <link rel="stylesheet" href="bai2.css">
+  <style>
+    label { display:block; margin-top:10px; }
+    .error { color:red; font-size:14px; }
+  </style>
+</head>
+<body>
+  <h2>Nhập liệu LOP</h2>
+  <form id="lopForm">
+    <label>MALOP (tối đa 6 ký tự):
+      <input type="text" id="malop" maxlength="6">
+    </label>
+    <label>TENLOP (tối đa 50 ký tự):
+      <input type="text" id="tenlop" maxlength="50">
+    </label>
+    <label>KHOAHOC (số nguyên):
+      <input type="number" id="khoahoc">
+    </label>
+    <label>GVCN (tối đa 50 ký tự):
+      <input type="text" id="gvcn" maxlength="50">
+    </label>
+    <br>
+    <button type="button" onclick="checkLop()">Submit</button>
+  </form>
+  <p id="msgLop" class="error"></p>
+
+  <script>
+    function checkLop(){
+      let malop = document.getElementById("malop").value.trim();
+      let tenlop = document.getElementById("tenlop").value.trim();
+      let khoahoc = document.getElementById("khoahoc").value.trim();
+      let gvcn = document.getElementById("gvcn").value.trim();
+      let msg = "";
+
+      if(malop === "" || malop.length > 6) msg += "MALOP không hợp lệ<br>";
+      if(tenlop === "" || tenlop.length > 50) msg += "TENLOP không hợp lệ<br>";
+      if(khoahoc === "" || !Number.isInteger(Number(khoahoc))) msg += "KHOAHOC phải là số nguyên<br>";
+      if(gvcn === "" || gvcn.length > 50) msg += "GVCN không hợp lệ<br>";
+
+      if(msg !== ""){
+        document.getElementById("msgLop").innerHTML = msg;
+      } else {
+        document.getElementById("msgLop").innerHTML = "Dữ liệu hợp lệ!";
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Đăng ký thành viên</title>
+  <link rel="stylesheet" href="bai2.css">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    label { display: block; margin-top: 10px; }
+    input[type=text], input[type=password], input[type=date], input[type=email], textarea {
+      width: 300px;
+      padding: 5px;
+    }
+    .required {
+      background-color: #ccfaff; /* nền xanh nhạt */
+    }
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body onload="document.getElementById('hoten').focus()">
+
+  <h2>Đăng ký thành viên</h2>
+  <form id="registerForm">
+    <label>Họ tên:
+      <input type="text" id="hoten" class="required">
+      <span class="error" id="errHoten"></span>
+    </label>
+    <label>Địa chỉ:
+      <input type="text" id="diachi">
+    </label>
+    <label>Giới tính:
+      <input type="radio" name="gioitinh" value="Nam"> Nam
+      <input type="radio" name="gioitinh" value="Nữ"> Nữ
+      <span class="error" id="errGT"></span>
+    </label>
+    <label>Ngày sinh:
+      <input type="text" id="ngaysinh" class="required" placeholder="dd/mm/yyyy" maxlength="10">
+      <span class="error" id="errNS"></span>
+    </label>
+    <label>Email:
+      <input type="text" id="email" class="required">
+      <span class="error" id="errEmail"></span>
+    </label>
+    <label>Điện thoại:
+      <input type="text" id="dienthoai">
+    </label>
+    <label>Khóa đăng ký:
+      <input type="checkbox" name="khoa" value="TA"> Tiếng Anh
+      <input type="checkbox" name="khoa" value="QT"> Quản trị
+      <input type="checkbox" name="khoa" value="CNTT"> CNTT
+    </label>
+    <label>Tên sử dụng:
+      <input type="text" id="username" class="required">
+      <span class="error" id="errUser"></span>
+    </label>
+    <label>Mật khẩu:
+      <input type="password" id="password" class="required">
+      <span class="error" id="errPass"></span>
+    </label>
+    <label>Gõ lại mật khẩu:
+      <input type="password" id="repassword" class="required">
+      <span class="error" id="errRepass"></span>
+    </label>
+    <label>Ghi chú:
+      <textarea id="note" rows="4" cols="40"></textarea>
+    </label>
+    <br>
+    <button type="button" onclick="submitForm()">Chấp nhận</button>
+    <button type="reset">Bỏ qua</button>
+  </form>
+
+  <script>
+    // chuẩn hóa họ tên
+    document.getElementById("hoten").addEventListener("blur", function(){
+      let str = this.value.trim().toLowerCase();
+      if(str==="") return;
+      str = str.replace(/\s+/g, " "); // bỏ khoảng trắng thừa
+      let words = str.split(" ");
+      for(let i=0;i<words.length;i++){
+        words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+      }
+      this.value = words.join(" ");
+    });
+
+    // kiểm tra email định dạng
+    document.getElementById("email").addEventListener("blur", function(){
+      let email = this.value.trim();
+      let regex = /^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*$/;
+      if(email && !regex.test(email)){
+        document.getElementById("errEmail").innerText = "Email không hợp lệ";
+      } else {
+        document.getElementById("errEmail").innerText = "";
+      }
+    });
+
+    // tự động thêm dấu '/' vào ngày sinh
+    document.getElementById("ngaysinh").addEventListener("input", function(e){
+      let v = this.value.replace(/[^0-9]/g, "");
+      if(v.length > 2 && v.length <= 4) {
+        v = v.slice(0,2) + "/" + v.slice(2);
+      } else if(v.length > 4){
+        v = v.slice(0,2) + "/" + v.slice(2,4) + "/" + v.slice(4,8);
+      }
+      this.value = v;
+    });
+
+    // kiểm tra nhập lại mật khẩu
+    document.getElementById("repassword").addEventListener("blur", function(){
+      let pass = document.getElementById("password").value;
+      if(this.value && this.value !== pass){
+        document.getElementById("errRepass").innerText = "Mật khẩu gõ lại không đúng";
+      } else {
+        document.getElementById("errRepass").innerText = "";
+      }
+    });
+
+    // chuyển Enter sang ô tiếp theo
+    document.querySelectorAll("input,textarea").forEach((el,idx,arr)=>{
+      el.addEventListener("keydown", function(e){
+        if(e.key === "Enter"){
+          e.preventDefault();
+          let next = arr[idx+1];
+          if(next){ next.focus(); }
+        }
+      });
+    });
+
+    // submit form
+    function submitForm(){
+      let valid = true;
+
+      // danh sách trường bắt buộc
+      let fields = [
+        {id:"hoten", err:"errHoten", msg:"Họ tên bắt buộc"},
+        {id:"ngaysinh", err:"errNS", msg:"Ngày sinh bắt buộc"},
+        {id:"email", err:"errEmail", msg:"Email bắt buộc"},
+        {id:"username", err:"errUser", msg:"Tên sử dụng bắt buộc"},
+        {id:"password", err:"errPass", msg:"Mật khẩu bắt buộc"},
+        {id:"repassword", err:"errRepass", msg:"Vui lòng gõ lại mật khẩu"}
+      ];
+
+      fields.forEach(f=>{
+        let val = document.getElementById(f.id).value.trim();
+        if(val===""){
+          document.getElementById(f.err).innerText = f.msg;
+          valid=false;
+        } else {
+          if(document.getElementById(f.err).innerText===f.msg)
+            document.getElementById(f.err).innerText = "";
+        }
+      });
+
+      // kiểm tra giới tính
+      let gt = document.querySelector('input[name="gioitinh"]:checked');
+      if(!gt){
+        document.getElementById("errGT").innerText = "Chọn giới tính";
+        valid=false;
+      } else {
+        document.getElementById("errGT").innerText = "";
+      }
+
+      // kiểm tra mật khẩu khớp
+      let pass = document.getElementById("password").value;
+      let repass = document.getElementById("repassword").value;
+      if(pass && repass && pass!==repass){
+        document.getElementById("errRepass").innerText = "Mật khẩu gõ lại không đúng";
+        valid=false;
+      }
+
+      if(valid){
+        alert("Form hợp lệ, gửi dữ liệu thành công!");
+      }
+    }
+  </script>
+</body>
+</html>

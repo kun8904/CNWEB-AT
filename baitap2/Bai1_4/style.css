@@ -1,0 +1,170 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+body {
+  background: #f2f2f2;   /* nền xám nhạt toàn trang */
+  color: #333;
+}
+
+
+/* Sidebar cố định bên trái */
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    background: #2c3e50;
+    color: white;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.sidebar h2 {
+    margin: 0 0 20px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.sidebar a {
+    display: block;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    transition: background 0.2s, padding-left 0.2s;
+}
+
+.sidebar a:hover {
+    background: #34495e;
+    padding-left: 20px; /* hiệu ứng dịch nhẹ */
+}
+
+.cv-container {
+  display: flex;
+  max-width: 1000px;
+    margin-left: 350px; /* chừa khoảng cho sidebar */
+    margin-top: 20px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    justify-content: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  }
+
+/* Cột trái */
+.left-column {
+  width: 35%;
+  background: #eaf6fb;
+  padding: 30px 20px;
+}
+
+.profile {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.profile img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid #3a9bdc;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+.profile h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 5px;
+}
+.profile h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #3a9bdc;
+}
+.profile p {
+  font-size: 14px;
+  color: #555;
+}
+
+.left-column .section {
+  margin-bottom: 20px;
+}
+.left-column .section h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #3a9bdc;
+  margin-bottom: 8px;
+}
+.left-column .section p,
+.left-column .section ul {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.left-column .section ul {
+  list-style: disc;
+  padding-left: 18px;
+}
+
+/* Cột phải */
+.right-column {
+  width: 65%;
+  padding: 30px;
+}
+
+.right-column .intro {
+  margin-bottom: 25px;
+}
+.right-column .intro h2 {
+  font-size: 18px;
+  color: #3a9bdc;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.right-column .intro p {
+  font-size: 15px;
+  color: #444;
+}
+
+.right-column .section {
+  margin-bottom: 25px;
+}
+.right-column .section h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #3a9bdc;
+  margin-bottom: 10px;
+}
+.right-column .section p {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+/* Kỹ năng */
+.skill {
+  margin-bottom: 12px;
+}
+.skill span {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+.skill-bar {
+  background: #ddd;
+  border-radius: 4px;
+  height: 8px;
+  overflow: hidden;
+}
+.skill-bar div {
+  background: #3a9bdc;
+  height: 100%;
+  border-radius: 4px;
+}
+

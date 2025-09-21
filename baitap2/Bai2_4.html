@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Form HOSO</title>
+  <link rel="stylesheet" href="bai2.css">
+  <style>
+    label { display:block; margin-top:10px; }
+    .error { color:red; font-size:14px; }
+  </style>
+</head>
+<body>
+  <h2>Nhập liệu HOSO</h2>
+  <form id="hosoForm">
+    <label>MAHS (tối đa 8 ký tự):
+      <input type="text" id="mahs" maxlength="8">
+    </label>
+    <label>HOTEN (tối đa 50 ký tự):
+      <input type="text" id="hoten" maxlength="50">
+    </label>
+    <label>NGAYSINH:
+      <input type="date" id="ngaysinh">
+    </label>
+    <label>DIACHI (tối đa 150 ký tự):
+      <input type="text" id="diachi" maxlength="150">
+    </label>
+    <label>LOP (tối đa 6 ký tự):
+      <input type="text" id="lop" maxlength="6">
+    </label>
+    <label>DIEMTOAN (float):
+      <input type="number" id="diemtoan" step="0.01">
+    </label>
+    <br>
+    <button type="button" onclick="checkHoso()">Submit</button>
+  </form>
+  <p id="msgHoso" class="error"></p>
+
+  <script>
+    function checkHoso(){
+      let mahs = document.getElementById("mahs").value.trim();
+      let hoten = document.getElementById("hoten").value.trim();
+      let ngaysinh = document.getElementById("ngaysinh").value;
+      let diachi = document.getElementById("diachi").value.trim();
+      let lop = document.getElementById("lop").value.trim();
+      let diemtoan = document.getElementById("diemtoan").value.trim();
+      let msg = "";
+
+      if(mahs === "" || mahs.length > 8) msg += "MAHS không hợp lệ<br>";
+      if(hoten === "" || hoten.length > 50) msg += "HOTEN không hợp lệ<br>";
+      if(ngaysinh === "") msg += "NGAYSINH không được bỏ trống<br>";
+      if(diachi === "" || diachi.length > 150) msg += "DIACHI không hợp lệ<br>";
+      if(lop === "" || lop.length > 6) msg += "LOP không hợp lệ<br>";
+      if(diemtoan === "" || isNaN(Number(diemtoan))) msg += "DIEMTOAN phải là số thực<br>";
+
+      if(msg !== ""){
+        document.getElementById("msgHoso").innerHTML = msg;
+      } else {
+        document.getElementById("msgHoso").innerHTML = "Dữ liệu hợp lệ!";
+      }
+    }
+  </script>
+</body>
+</html>

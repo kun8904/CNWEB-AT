@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Bài 7.12 - Sắp xếp & Tìm kiếm</title>
+  <link rel="stylesheet" href="bai2.css">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    table {
+      border-collapse: collapse;
+      width: 60%;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th.sortable {
+      cursor: pointer;
+      position: relative;
+    }
+    th.sortable::after {
+      content: "";
+      position: absolute;
+      right: 8px;
+    }
+    th.sortable.asc::after {
+      content: "▲";
+      color: #00bcd4;
+    }
+    th.sortable.desc::after {
+      content: "▼";
+      color: #00bcd4;
+    }
+    mark {
+      background: yellow;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h2>Sắp xếp & Tìm kiếm trên bảng</h2>
+
+  <label>
+    Nhập từ cần tìm:
+    <input type="text" id="searchBox" placeholder="Nhập từ khóa...">
+  </label>
+
+  <table id="productTable">
+    <thead>
+      <tr>
+        <th>TT</th>
+        <th class="sortable">Mã sản phẩm</th>
+        <th class="sortable">Tên sản phẩm</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>SP001</td><td>Máy giặt</td></tr>
+      <tr><td>2</td><td>SP002</td><td>Bếp đa năng</td></tr>
+      <tr><td>3</td><td>SP003</td><td>Lò sưởi</td></tr>
+      <tr><td>4</td><td>SP004</td><td>Điều hòa nhiệt độ</td></tr>
+      <tr><td>5</td><td>SP005</td><td>Tủ lạnh</td></tr>
+    </tbody>
+  </table>
+
+  <script>
+    const table = document.getElementById("productTable");
+    const headers = table.querySelectorAll("th.sortable");
+    let sortColumn = null;
+    let sortDirection = 1;
+
+    headers.forEach((header, index) => {
+      header.addEventListener("click", () => {
+        const rows = Array.from(table.tBodies[0].rows);
+        
+        // Đảo chiều nếu bấm cùng cột
+        if (sortColumn === index) {
+          sortDirection *= -1;
+        } else {
+          sortColumn = index;
+          sortDirection = 1;
+        }
+
+        // Xóa class cũ
+        headers.forEach(h => h.classList.remove("asc","desc"));
+        header.classList.add(sortDirection === 1 ? "asc" : "desc");
+
+        // Sắp xếp
+        rows.sort((a, b) => {
+          const valA = a.cells[index].innerText.toLowerCase();
+          const valB = b.cells[index].innerText.toLowerCase();
+          if (!isNaN(valA) && !isNaN(valB)) {
+            return (valA - valB) * sortDirection;
+          }
+          return valA.localeCompare(valB) * sortDirection;
+        });
+
+        // Gắn lại
+        rows.forEach(r => table.tBodies[0].appendChild(r));
+      });
+    });
+
+    // Tìm kiếm realtime
+    document.getElementById("searchBox").addEventListener("input", function(){
+      const keyword = this.value.toLowerCase();
+      const rows = table.tBodies[0].rows;
+
+      for (let row of rows) {
+        row.style.display = "none"; // ẩn mặc định
+        for (let i = 1; i < row.cells.length; i++) {
+          const cell = row.cells[i];
+          const text = cell.innerText;
+          if (text.toLowerCase().includes(keyword)) {
+            row.style.display = "";
+            // highlight
+            const regex = new RegExp(`(${keyword})`, "gi");
+            cell.innerHTML = text.replace(regex, "<mark>$1</mark>");
+          } else {
+            cell.innerHTML = text;
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

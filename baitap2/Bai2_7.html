@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Bài 2.7 - Thực đơn</title>
+  <link rel="stylesheet" href="bai2.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      gap: 30px;
+      padding: 20px;
+    }
+
+    /* Menu bên trái */
+    .menu ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .menu li {
+      padding: 10px;
+      margin-bottom: 5px;
+      background-color: #eee;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    /* Hover: sáng lên */
+    .menu li:hover {
+      background-color: #d1f0d1;
+    }
+
+    /* Khi được chọn */
+    .menu li.selected {
+      background-color: #4caf50;
+      color: white;
+      font-weight: bold;
+    }
+
+    /* Vùng hiển thị bên phải */
+    .display-area {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+  <!-- Danh sách menu bên trái -->
+  <div class="menu">
+    <ul>
+      <li data-title="Quản lý cán bộ (Đăng ký thông tin)">» Quản lý cán bộ (Đăng ký thông tin)</li>
+      <li data-title="Phân quyền">» Phân quyền</li>
+      <li data-title="Cổng thông tin đào tạo và người học">» Cổng thông tin đào tạo và người học</li>
+      <li data-title="Quản lý văn bản và hồ sơ công việc">» Quản lý văn bản và hồ sơ công việc</li>
+      <li data-title="Hành chính công">» Hành chính công</li>
+      <li data-title="Hệ thống thông tin báo cáo">» Hệ thống thông tin báo cáo</li>
+    </ul>
+  </div>
+
+  <!-- Khu vực hiển thị tiêu đề bên phải -->
+  <div class="display-area">
+    <h3 id="selected-title">» Vui lòng chọn một tác vụ</h3>
+  </div>
+
+  <script>
+    // Lấy các phần tử menu
+    const menuItems = document.querySelectorAll('.menu li');
+    const titleDisplay = document.getElementById('selected-title');
+
+    // Gắn sự kiện click cho từng mục menu
+    menuItems.forEach(item => {
+      item.addEventListener('click', function () {
+        // Xóa class 'selected' khỏi tất cả
+        menuItems.forEach(i => i.classList.remove('selected'));
+
+        // Thêm class 'selected' cho item hiện tại
+        this.classList.add('selected');
+
+        // Hiển thị tiêu đề tương ứng
+        const title = this.getAttribute('data-title');
+        titleDisplay.textContent = `» ${title}`;
+      });
+    });
+  </script>
+</body>
+</html>

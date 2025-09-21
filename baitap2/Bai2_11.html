@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Bài 7.11 - Hoạt cảnh</title>
+  <link rel="stylesheet" href="bai2.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+    }
+
+    #hoatcanh {
+      text-align: center;
+    }
+
+    #animation {
+      margin-top: 20px;
+      height: 300px;
+      text-align: center;
+    }
+
+    #animation img {
+      max-height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="hoatcanh">
+    <h2>Hoạt cảnh Jump</h2>
+    <button onclick="startAnimation()">Jump</button>
+    <button onclick="stopAnimation()">Stop</button>
+  </div>
+
+
+  <div id="animation">
+    <img id="character" src="frame1.png" alt="stickman">
+  </div>
+
+  <script>
+    let frames = [
+      "frame1.png", // dáng đứng
+      "frame2.png", // dang tay trái
+      "frame3.png", // dang cả tay + chân
+      "frame4.png", // dang tay phải
+      "frame5.png"  // dáng đứng lại
+    ];
+    let index = 0;
+    let intervalId = null;
+
+    function startAnimation() {
+      if (intervalId) return; // tránh chạy nhiều lần
+      intervalId = setInterval(() => {
+        index = (index + 1) % frames.length;
+        document.getElementById("character").src = frames[index];
+      }, 500); // đổi ảnh mỗi 0.5 giây
+    }
+
+    function stopAnimation() {
+      clearInterval(intervalId);
+      intervalId = null;
+    }
+  </script>
+</body>
+
+</html>
